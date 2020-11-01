@@ -35,24 +35,46 @@
     }
        $i = 0;
        $j=0;
+       $y=0;
+       $o =1;
+       $u=0;
        while($row = $stmt->fetch(PDO::FETCH_ASSOC)) : 
        $question[$i] = $row['name']; 
        $i += 1;
+       while ($y < 5) 
+        {
+             $Reponses[$u] = $row["reponse".$o]; 
+             $y +=1;
+             $o +=1;
+             $u+=1;
+        }
+        $y=0;
+        $o=1;
        $j += 1;
         endwhile;
         
 
 
-        $cnx=null;
+        $pdo=null;
 
 
     $xml = new DOMDocument('1.0', 'utf-8');
     $tag = $xml->createElement('Questionnaire',$name[$choix]);
     $xml->appendChild($tag);
     $i=0;
+    $y=0;
+    $P =0;
     while ($i < $j) {
         $tag2 = $xml->createElement('Questions',$question[$i]);
-        $xml->appendChild($tag2);
+        $tag->appendChild($tag2);
+        while ($y < 5) 
+        {
+            $tag3 = $xml->createElement('Reponses',$Reponses[$P]);
+            $tag2->appendChild($tag3);
+            $P+=1;
+            $y +=1;
+        }
+        $y=0;
         echo "<script>alert(\"XML CREER\")</script>";
         $i += 1;
     }
